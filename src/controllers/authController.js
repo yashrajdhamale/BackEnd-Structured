@@ -71,4 +71,14 @@ const signup = async (req, res) => {
     }
 };
 
-module.exports = { login, signup };
+const logout = async (req, res) => {
+    try {
+        res.clearCookie('authToken');
+        res.status(200).json({ message: 'Logout successful!' });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+module.exports = { login, signup ,logout};

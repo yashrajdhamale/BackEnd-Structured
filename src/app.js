@@ -1,15 +1,22 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors'); 
+
 const router = require('./routes/router'); 
 
-const connectDB = require('./config/connectDB'); 
-const CORS = require('cors'); 
+// Create Express App
 const app = express();
 
-// Middleware setup
-app.use(express.json()); // Allows parsing of JSON request bodies
-app.use(CORS()); // Allows Cross-Origin Resource Sharing
+// Middleware
+app.use(cookieParser());
+app.use(express.json()); 
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    credentials: true,              
+}));
 
-// Use your routes
+
+
 app.use('/', router);
 
 module.exports = app;

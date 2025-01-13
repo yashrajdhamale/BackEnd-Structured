@@ -26,11 +26,16 @@ const login = async (req, res) => {
                     { userId: user._id, email: user.email }, // payload
                     process.env.JWT_SECRET
                 );
-                res.cookie('authToken', token, 
-                { httpOnly: true, secure: false, sameSite: 'Lax' });
+
+                // Set a cookie with a far-future expiration date
+                res.cookie('authToken', token, {
+                    httpOnly: true,          // Prevent client-side access
+                    secure: false,           // Use 'true' in production with HTTPS
+                    sameSite: 'Lax',         // Lax prevents CSRF attacks
+                    expires: new Date(9999, 11, 31), // Far future expiration date (31st Dec 9999)
+                });
 
                 res.status(200).json({ message: 'Login successful!' });
-
             } else {
                 res.status(401).json({ error: 'Invalid credentials!' });
             }
@@ -45,6 +50,7 @@ const login = async (req, res) => {
         await client.close();
     }
 };
+
 
 const signup = async (req, res) => {
     try {

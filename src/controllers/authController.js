@@ -30,8 +30,8 @@ const login = async (req, res) => {
                 // Set a cookie with a far-future expiration date
                 res.cookie('authToken', token, {
                     httpOnly: true,          // Prevent client-side access
-                    secure: false,           // Use 'true' in production with HTTPS
-                    sameSite: 'Lax',         // Lax prevents CSRF attacks
+                    secure: false,           // Use 'true' in production with HTTPS    
+                    sameSite: 'None',    // Lax prevents CSRF attacks
                     expires: new Date(9999, 11, 31), // Far future expiration date (31st Dec 9999)
                 });
 

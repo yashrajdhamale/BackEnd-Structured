@@ -29,11 +29,14 @@ const login = async (req, res) => {
 
                 // Set a cookie with a far-future expiration date
                 res.cookie('authToken', token, {
-                    httpOnly: true,          // Prevent client-side access
-                    secure: true,           // Use 'true' in production with HTTPS
-                    sameSite: 'None',         // Lax prevents CSRF attacks
-                    expires: new Date(9999, 11, 31), // Far future expiration date (31st Dec 9999)
+                    httpOnly: true,       // Prevents client-side JavaScript from accessing the cookie
+                    secure: false,        // Allows the cookie to be sent over HTTP (not recommended for production)
+                    sameSite: 'None',     // Allows the cookie to be sent with cross-origin requests
+                    path: '/',            // Makes the cookie accessible to all paths on your server
+                    expires: new Date(9999, 11, 31), // Sets a long expiration date
                 });
+                
+                
 
                 res.status(200).json({ message: 'Login successful!' });
             } else {
